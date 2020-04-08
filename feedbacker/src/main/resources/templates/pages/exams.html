@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{fragments/layout}">
+<head>
+	<title>Group feedback</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid pt-3">
+			<h3>List of available exams</h3>
+			<ul>
+				<li th:each="e : ${exams}"><a th:href="'/feedback/' + ${e.id}" th:text="${e.name}"></a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

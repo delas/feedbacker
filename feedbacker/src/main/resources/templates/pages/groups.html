@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{fragments/layout}">
+<head>
+	<title>Group feedback</title>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".thumbnail").mouseenter(function() { $(this).animate({ width: "+=100", height: "+=134" }); });
+			$(".thumbnail").mouseleave(function() { $(this).animate({ width: "-=100", height: "-=134" }); });
+		});
+	</script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid pt-3">
+			<h3>List of groups</h3>
+			<ul>
+				<li th:each="g : ${groups.keySet()}">
+					<a th:href="'/feedback/group/' + ${g}">Group</a>
+					<ul>
+						<li th:each="s : ${groups.get(g)}">
+							<img class="rounded thumbnail" th:src="${s.img}" height="25" />
+							<span class="small" th:text="${s.name}"></span><br>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

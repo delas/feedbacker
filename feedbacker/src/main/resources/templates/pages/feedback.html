@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{fragments/layout}">
+<head>
+	<title>Group feedback</title>
+	<script type="text/javascript">
+		function f(asset, type, id, value) {
+			$.ajax({
+				type: "POST",
+				url: "/feedback/update/" + asset + "/" + type + "/" + id,
+				data: { "value" : value },
+				success: function(data) {
+					console.log(data);
+					if (data == "true") {
+						$("#success").show().delay(2000).fadeOut();
+					} else {
+						$("#failure").show().delay(2000).fadeOut();
+					}
+				},
+				failure: function(errMsg) {
+					$("#failure").show().delay(2000).fadeOut();
+				}
+			});
+		};
+	
+		$(document).ready(function() {
+			$(".feedback").focusout(function() {
+				f($(this).data("asset"), $(this).data("type"), $(this).data("id"), $(this).val());
+			});
+			$(".feedback").typeWatch({
+				callback : function(value) { f($(this).data("asset"), $(this).data("type"), $(this).data("id"), value); },
+				wait : 250
+			});
+			
+			$(".thumbnail").mouseenter(function() { $(this).animate({ width: "+=100", height: "+=134" }); });
+			$(".thumbnail").mouseleave(function() { $(this).animate({ width: "-=100", height: "-=134" }); });
+		});
+	</script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="fixed-top text-right collapse small mt-2 mr-1" id="success">
+			<span class="alert alert-success p-1">Saved!</span>
+		</div>
+		<div class="fixed-top text-right collapse small mt-2 mr-1" id="failure">
+			<span class="alert alert-danger p-1">Error while saving!</span>
+		</div>
+		
+	
+		<div class="container-fluid d-flex flex-column">
+			<div class="row" style="height: 100%">
+				<div class="col-4 border-right bg-light pt-3">
+					<h2>Group feedback</h2>
+					<form class="h-100">
+						<div class="form-group">
+							<input type="text" class="form-control feedback" data-asset="group" data-type="grade" th:attr="data-id=${g.id}" th:value="${g.tentativeGrade}" placeholder="Tentative grade">
+						</div>
+						<div class="form-group h-100">
+							<textarea class="form-control feedback" data-asset="group" data-type="feedback" th:attr="data-id=${g.id}" th:text="${g.feedback}" rows="20" placeholder="Group feedback" id="groupFeedback"></textarea>
+						</div>
+					</form>
+				</div>
+				<div class="col-8 pt-3">
+					<h2>Individual feedback</h2>
+					<div class="row">
+						<div class="col-6">
+							<div class="card mb-3" th:each="s : ${students1}">
+								<div class="card-header">
+									<div class="row">
+										<div class="col-9">
+											<img class="rounded thumbnail" th:src="${s.student.img}" height="50">
+											<span class="" th:text="${s.student.name}"></span>
+										</div>
+										<div class="col">
+											<input type="text" class="form-control float-right feedback" data-asset="individual" data-type="grade" th:attr="data-id=${s.id}" th:value="${s.tentativeGrade}" placeholder="Grade?">
+										</div>
+									</div>
+								</div>
+								<textarea class="form-control border-0 feedback" data-asset="individual" data-type="feedback" th:text="${s.feedback}" th:attr="data-id=${s.id}" style="width:100%" rows="4" placeholder="Individual feedback"></textarea>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="card mb-3" th:each="s : ${students2}">
+								<div class="card-header">
+									<div class="row">
+										<div class="col-9">
+											<img class="rounded thumbnail" th:src="${s.student.img}" height="50">
+											<span class="" th:text="${s.student.name}"></span>
+										</div>
+										<div class="col">
+											<input type="text" class="form-control float-right feedback" data-asset="individual" data-type="grade" th:attr="data-id=${s.id}" th:value="${s.tentativeGrade}" placeholder="Grade?">
+										</div>
+									</div>
+								</div>
+								<textarea class="form-control border-0 feedback" data-asset="individual" data-type="feedback" th:text="${s.feedback}" th:attr="data-id=${s.id}" style="width:100%" rows="4" placeholder="Individual feedback"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
