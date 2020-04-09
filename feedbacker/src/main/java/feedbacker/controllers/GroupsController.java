@@ -29,7 +29,7 @@ public class GroupsController {
 	@Autowired
 	private GroupsStudentsRepository repoGroupsStudent;
 
-	@GetMapping("/feedback/{id}")
+	@GetMapping("/feedback/exam/{id}")
 	public String get(Model model, @PathVariable(value = "id") long examId) {
 		
 		Optional<Exam> e = repoExams.findById(examId);

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{fragments/layout}">
+<head>
+	<title>Group feedback</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid pt-3">
+			<h3>Add new exam</h3>
+			<form action="#" th:action="@{/feedback/exam/add}" th:object="${exam}" method="post">
+				<div class="form-group">
+					<label for="name">Exam name:</label>
+					<input class="form-control"
+						th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" type="text" th:field="*{name}" id="name" placeholder="Exam name">
+					<div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+				</div>
+
+				<div class="form-group">
+					<label for="name">JSON of students (imported using <a href="javascript:(function()%7Bvar%20path%20%3D%20%24(location).attr('href')%3B%0Avar%20assignmentUid%20%3D%20path.substring(path.indexOf(%22%24%22)%20-%203%2C%20path.indexOf(%22%3F%22))%3B%0A%24.get(%22https%3A%2F%2Fdtu.onlineeksamen.dk%2Fapi%2FAssignmentAdministration%2FGetHandIns%2F%22%20%2B%20assignmentUid%2C%20%7B%22headers%22%3A%7B%22x-currentusertoken%22%3AuserToken%20%7D%7D%2C%20function(data)%7B%20%24(%22%23container%22).prepend(%22%3Ctextarea%20style%3D'position%3A%20absolute%3B%20top%3A%200%3B%20left%3A%200%3B%20width%3A%20100%25%3B%20height%3A%20100%25%3B%20z-index%3A%2010000'%3E%22%20%2B%20JSON.stringify(data)%20%2B%20%22%3C%2Ftextarea%3E%22)%3B%20%7D)%3B%7D)()%3B">this bookmarklet</a> from the DTU Inside's group assignment page):</label>
+					<textarea class="form-control" id="json" name="json" placeholder="JSON" rows="10"></textarea>
+				</div>
+				
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

@@ -8,8 +8,14 @@
 		<div class="container-fluid pt-3">
 			<h3>List of available exams</h3>
 			<ul>
-				<li th:each="e : ${exams}"><a th:href="'/feedback/' + ${e.id}" th:text="${e.name}"></a></li>
+				<li th:each="e : ${exams}">
+					<a th:href="'/feedback/exam/' + ${e.id}" th:text="${e.name}"></a>
+					<a th:href="@{/feedback/exam/delete/{id}(id=${e.id})}"><i data-toggle="confirmation" data-placement="left" title="Delete this entry?" class="far fa-trash-alt"></i></a>
+				</li>
 			</ul>
+			<p>
+				<a class="btn btn-primary" href="feedback/exam/add">Add a new exam</a>
+			</p>
 		</div>
 	</div>
 </body>
