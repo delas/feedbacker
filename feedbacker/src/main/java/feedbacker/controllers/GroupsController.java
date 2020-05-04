@@ -34,15 +34,32 @@ public class GroupsController {
 		
 		Optional<Exam> e = repoExams.findById(examId);
 		if (e.isPresent()) {
-			Map<Long, LinkedList<Student>> m = new HashMap<Long, LinkedList<Student>>();
+			Map<Group, LinkedList<Student>> m = new HashMap<Group, LinkedList<Student>>();
 			for (Group g : repoGroups.findByExam(e.get())) {
-				m.put(g.getId(), new LinkedList<Student>());
+				m.put(g, new LinkedList<Student>());
 				for (GroupStudents gs : repoGroupsStudent.findByGroup(g)) {
-					m.get(g.getId()).add(gs.getStudent());
+					m.get(g).add(gs.getStudent());
 				}
 			}
 			model.addAttribute("groups", m);
 		}
 		return "pages/groups";
+	}
+	
+	@GetMapping("/feedback/exam/{id}/print")
+	public String print(Model model, @PathVariable(value = "id") long examId) {
+		Optional<Exam> e = repoExams.findById(examId);
+		if (e.isPresent()) {
+			model.addAttribute("exam", e.get());
+			Map<Group, LinkedList<GroupStudents>> m = new HashMap<Group, LinkedList<GroupStudents>>();
+			for (Group g : repoGroups.findByExam(e.get())) {
+				m.put(g, new LinkedList<GroupStudents>());
+				for (GroupStudents gs : repoGroupsStudent.findByGroup(g)) {
+					m.get(g).add(gs);
+				}
+			}
+			model.addAttribute("groups", m);
+		}
+		return "pages/print";
 	}
 }

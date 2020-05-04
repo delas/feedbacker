@@ -9,11 +9,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import com.github.bufferings.thymeleaf.extras.nl2br.dialect.Nl2brDialect;
+
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
+	}
+	
+	@Bean
+	public Nl2brDialect dialect() {
+		return new Nl2brDialect();
 	}
 
 	@Bean

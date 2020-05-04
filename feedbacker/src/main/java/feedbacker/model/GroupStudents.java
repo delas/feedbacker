@@ -1,5 +1,6 @@
 package feedbacker.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,9 +19,9 @@ public class GroupStudents {
 
 	@Column @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Student student;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Group group;
 	@Column(name="tentative_grade")
 	private String tentativeGrade;

@@ -10,6 +10,7 @@
 			<ul>
 				<li th:each="e : ${exams}">
 					<a th:href="'/feedback/exam/' + ${e.id}" th:text="${e.name}"></a>
+					<a th:href="@{/feedback/exam/{id}/print(id=${e.id})}" target="_blank"><i class="fas fa-print"></i></a>
 					<a th:href="@{/feedback/exam/delete/{id}(id=${e.id})}"><i data-toggle="confirmation" data-placement="left" title="Delete this entry?" class="far fa-trash-alt"></i></a>
 				</li>
 			</ul>

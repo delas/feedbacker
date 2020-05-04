@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:nl2br="https://github.com/bufferings/thymeleaf-extras-nl2br">
+<head>
+	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+	<style>
+		body {
+			font-family: "Computer Modern Serif", serif;
+		}
+	</style>
+</head>
+<body>
+	<h1 th:text="${exam.name}"></h1>
+	<th:block th:each="g : ${groups.keySet()}">
+		<h2>Group - <span th:text="${g.name}"></span></h2>
+		<p>
+			<strong>Tentative grade:</strong> <span th:text="${g.tentativeGrade}"></span><br>
+			<strong>Feedback:</strong> <span nl2br:text="${g.feedback}"></span>
+		</p>
+		<div style="column-count: 2; page-break-after: always;">
+			<th:block th:each="s : ${groups.get(g)}">
+				<h3 class="small" th:text="${s.getStudent().name}"></h3>
+				<p>
+					<strong>Tentative grade:</strong> <span th:text="${s.tentativeGrade}"></span><br>
+					<strong>Feedback:</strong> <span nl2br:text="${s.feedback}"></span>
+				</p>
+			</th:block>
+		</div>
+	</th:block>
+</body>
+</html>

@@ -15,7 +15,8 @@
 			<h3>List of groups</h3>
 			<ul>
 				<li th:each="g : ${groups.keySet()}">
-					<a th:href="'/feedback/group/' + ${g}">Group</a>
+					<a th:href="'/feedback/group/' + ${g.id}">Group</a>
+					(<span th:text="${g.name}"></span>)
 					<ul>
 						<li th:each="s : ${groups.get(g)}">
 							<img class="rounded thumbnail" th:src="${s.img}" height="25" />

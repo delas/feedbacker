@@ -80,6 +80,10 @@ public class FeedbackController {
 				Group g = og.get();
 				g.setFeedback(value);
 				repoGroups.save(g);
+			} else if (type.equals("name")) {
+				Group g = og.get();
+				g.setName(value);
+				repoGroups.save(g);
 			}
 			return "true";
 		}
